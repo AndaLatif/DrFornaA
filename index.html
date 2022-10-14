@@ -14,7 +14,7 @@
     <div id='result'>
         <div class="form">
             <div class="fileinput">
-                Upload input <input class="fileinp" type="file" id="files" name="files" title="Enter an input file">
+                Upload input <input class="fileinp" type="file" id="files" name="files"  title="Enter an input file">
             </div>
             <div class="seqfileinp">  
                 Import sequence <input class="seqfileinpc" type="file" id="files" name="files" title="Enter an input file">
@@ -29,7 +29,8 @@
         </div>
         <div id="fullScreenContainer">
             <div id="controlContainer" >
-                <button class="bform" id="toggleAnimation">Play/Pause</button>
+                Play speed: <input class="playspeed" type="text" id="speed" name="playspeed" title="Play speed" value="10" style="width: 30pt;">
+                ms <button class="bform" id="toggleAnimation">Play/Pause</button>
                 <button class="bform" id="downloadButton" title="Download plot as SVG">Download</button>
                 <button class="bform" id="toggleFullScreen">Fullscreen</button>
             </div>
