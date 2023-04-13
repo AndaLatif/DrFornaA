@@ -180,6 +180,7 @@ function readFromFileUpload(){
                   //  console.log("discarded time points")
                     alert("Some time points present in your file were discarded due to the presence of only low occupied structures ")
                 }
+                console.log(a)
                 realtime=d3new.min(dd[0])
                 ShowData(a)
             }            
@@ -391,6 +392,7 @@ function initialize(data){
     //start at the beginning, initialize  
     prevtime = null
     strtoPlotprev = null
+    // console.log(data[data.length - 1])
     sequenceLength = data[data.length - 1].structure.length; //length of the transcribed sequence, used for seeing when the transcription ends
     filteredData=null
     nestedData=[]
@@ -580,11 +582,10 @@ function CreateScales(){
             .scale(nucleotideScale).ticks(5);
         
             
-         rainbowScale = (t) => { //console.log(t/ sequenceLength)
-            //console.log(t, t/(2* sequenceLength))
-            return d3.hcl(360*t, 100, 55); 
-            //return d3.hcl(360* t/(sequenceLength), 100* t/(sequenceLength), 55); 
-        // return d3.hcl(360* t, 100, 55); 
+         rainbowScale = (t) => { 
+            // console.log(t, 360*t/80,  360*t)
+            // return d3.hcl(360*t, 100, 55); 
+            return d3.hcl( 4*t ,100, 55); 
         };
         
         return combinedScale, rainbowScale, mintime, maxlintime
@@ -757,7 +758,8 @@ function showLine(coord, color="red") {
  * @returns {Array} a list of rgb colors, one for each nucleotide
  */ 
 function formatColors (colors) {   
-                return colors.map(function(c) {               
+                return colors.map(function(c) { 
+                // console.log(c.rgb().toString())              
                 return c.rgb().toString();
             })
           }
@@ -952,6 +954,10 @@ function PLOT(realtime) {
                                     .style("height", `${svgHeight}px`)
                                     .style('position', 'relative')
                                     .style("z-index", 2).style("background-color", "azure").text("Selected structure, occupancy "+d.data.value); 
+                                    let rectname="svg"+d.data.name
+                                 
+                                    containers[rectname].addRNA(d.data.str,{"sequence": inputSeq} )
+                                 
                                     // console.log(d.data)                              
                                     return c.style("width", `${svgWidth}px`)
                                         .style("height", `${svgHeight}px`)
@@ -959,9 +965,12 @@ function PLOT(realtime) {
                                         .style('top',  d => { return `${0}px`; })
                                         .style("opacity", 100).style("z-index", 3)
                                         
+                                        
                                 }
                                 else{zoom=false
+                                    let rectname="svg"+d.data.name
                                     d3.select(".help").remove()
+                                    containers[rectname].addRNA(d.data.str)
                                     return c.style('left',  d =>{ return `${d.x0}px`; })
                                     .style('top',  d => { return `${d.y0}px`; })
                                     .style("z-index", 1)
@@ -990,13 +999,10 @@ function PLOT(realtime) {
                                 if ( d.data.str != '') {
                                     containers[rectname] = new FornaContainer('#' + rectname,{zoomable:false, editable:false, animation:false, displayNodeLabel: true,// labelInterval:0,
                                         transitionDuration:0});
-                                        containers[rectname].addRNA(d.data.str,{"sequence": inputSeq} )
+                                        containers[rectname].addRNA(d.data.str )
                                  
-                                    //containers[rectname].seq=inputSeq
-                                      //am cum sa dau secventa?
-                                        //SOMEHOW GIVE SEQUENCE AS
                                     containers[rectname].transitionRNA(d.data.str);
-                                    // console.log(containers[rectname])    
+                                
                                     let colorStrings = d.data.colors.map(function(d, i) {
                                         return `${i+1}:${d}`;
                                     });
@@ -1067,17 +1073,20 @@ function calculateNucleotideColors(data) {
                
             // convert average nucleotide numbers to colors
             elements[i][2].map((d) => {
-                let nucleotideNormPosition = nucleotideScale(+averageBpNum);
+                let colorScale = d3new.scaleLinear()
+                .range([0, 360]).domain([0, sequenceLength]);
+                let nucleotideNormPosition = colorScale(+averageBpNum);
                 colors[d-1] = rainbowScale(nucleotideNormPosition);
-                //console.log(elements[i], nucleotideNormPosition)
-                //console.log(i, averageBpNum, nucleotideNormPosition,  colors[d-1])
+                // console.log(averageBpNum,nucleotideNormPosition, nucleotideScale(1), nucleotideScale(102))
+                // console.log(elements[i], averageBpNum, nucleotideNormPosition,   rainbowScale(nucleotideNormPosition))
+            
             });
 
 
             // each structure gets its own set of structures
         }
         d.colors = colors;
-        //console.log(colors)
+        // console.log(colors)
     });
 }
 /**

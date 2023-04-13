@@ -4,7 +4,7 @@ body {
   }
 #helptot{
   background: white;
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding: 0px;
   margin-block-start: 0.2em;
   margin-block-end: 0.2em;
@@ -24,10 +24,17 @@ width: 63%;
 padding-left: 0.5rem;
  padding-right: .5rem;
 }
+.example_container{
+  width: 34%;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  font-family: 'Courier New', Courier, monospace;
+}
 .right_container{    
   width: 34%;
   padding-left: .5rem;
   padding-right: .5rem;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 p {
   display: block;
