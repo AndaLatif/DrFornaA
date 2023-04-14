@@ -12,40 +12,59 @@
     <div id="title">DrForna: visualization of cotranscriptional folding</div>
     <!-- <div id="subtitle">Visualization of changing structure ensembles during cotranscriptional folding -->
     <!-- </div> -->
-    <div id= "footnote">
+    <!-- <div id= "footnote">
         <p id="help"> <a href=help.html> Help</a></p>
         <p id="repository"><a href=https://github.com/ViennaRNA/drforna> Github repository</a></p>       
-    </div>
+    </div> -->
     <div id='result'>
         <div class="form">
-            <div class="fileinput">
-                Upload input <input class="fileinp" type="file" id="files" name="files"  title="Enter an input file">
+            <div class="fileinput">                
+                <input class="fileinp" type="file" id="files" name="files"  title="Enter an input file">
+                
             </div>
-            <div class="seqfileinp">  
-                Import sequence <input class="seqfileinpc" type="file" id="files" name="files" title="Enter an input file">
+            <div class="seqToggleDiv"> 
+                <button id="toggleSequence">Sequence</button>
             </div>
-        </div>
-        <div class="seqform"> 
-            <a id="sinp">(Optional) Sequence:</a>
-            <textarea id="sequence" name="sequence" cols="80" rows="2">-</textarea>
-            <div class="sb" > 
-                <button id="SeqReload">Load Sequence </button>    
-            </div>  
+           
+        </div> 
+        <div id="seqfield" class="seqform"> 
+            <textarea id="sequence" name="sequence" rows="2">-</textarea>
+            <div class="alignleft">
+                <input type="file" 
+                       name="files"
+                       id="files"
+                       class="seqfileinpc" 
+                       title="Provide an sequence input file in fasta format."
+                       style="width: 140pt;">
+            </div>
+            <div class="alignright">
+                <button id="SeqReload">Load Sequence</button>
+            </div>
+            <div style="clear: both;"></div>
+            <p></p>
         </div>
         <div id="fullScreenContainer">
             <div id="controlContainer" >
-                Occupancy threshold: <input class="occupancy" type="text" id="occupancy" name="occupancy" title="Occupancy" value="0.01" style="width: 30pt;">
+                min occupancy: <input class="occupancy" type="text" id="occupancy" name="occupancy" title="Occupancy" value="0.01" style="width: 30pt;">
                 
-                Play speed: <input class="playspeed" type="text" id="speed" name="playspeed" title="Play speed" value="5" style="width: 30pt;">
-                ms
-                <button class="bform" id="toggleAnimation">Play/Pause</button>
+                
+                <button class="bform" id="toggleAnimation">Play/Pause</button><input class="playspeed" type="text" id="speed" name="playspeed" title="Play speed" value="5" style="width: 30pt;">
+                ms/frame
                 <button class="bform" id="downloadButton" title="Download plot as SVG">Download</button>
                 <button class="bform" id="toggleFullScreen">Fullscreen</button>
             </div>
             <div id="drTrafoContainer">
                 <div id="visContainer">See the results here</div>
+                <div id="tableContainer"></div>
+                <div id="divdatatable"></div>
+                
             </div>
+            <button id="toggleTable">Toggle summary table</button>
         </div>
+        <p class="alignright">
+            <a href=help.html>Help</a>
+            <a href=https://github.com/ViennaRNA/drforna>Github</a>
+        </p>
     </div>
     
     <script language="JavaScript" src="drforna.js"></script>

@@ -1,5 +1,5 @@
 import * as d3new from "d3"
-import { documentToSVG, elementToSVG, inlineResources, formatXML } from 'dom-to-svg'
+import { elementToSVG} from 'dom-to-svg'
 import { saveAs } from "file-saver";
 
 import {FornaContainer, RNAUtilities} from 'fornac';
@@ -61,6 +61,10 @@ function preparePlotArea(elementName, notificationContent = 'Loading...') {
         .attr('id', 'tableContainer')
         
         .html("<p>and time table container-most populated structure</p>")
+    container
+        .append('div')
+        .attr('id', 'divdatatable')
+        
 }
 
 /**
@@ -131,7 +135,14 @@ function load_example(filename){
  ** reads and shows the data from the example "grow.drf" and then gives the oportunity to upload files and sequences
  */
 function start() {
-    prevtime = null
+    hideseq()
+    document.getElementById("toggleSequence")
+        .addEventListener("click", ()=>hideseq(), false);
+    hidetab() 
+    document.getElementById("toggleTable")
+        .addEventListener("click",  ()=>hidetab(), false);
+       
+    // prevtime = null
     nestedData = null
     //console.log('starting')
     load_example("grow.drf")
@@ -180,7 +191,7 @@ function readFromFileUpload(){
                   //  console.log("discarded time points")
                     alert("Some time points present in your file were discarded due to the presence of only low occupied structures ")
                 }
-                console.log(a)
+                
                 realtime=d3new.min(dd[0])
                 ShowData(a)
             }            
@@ -777,13 +788,13 @@ function WriteTable(strToPlot){
                 'Occupancy', 'Structure' , 'Energy'];    
     
                 d3new.select("#tableContainer")
-                    .selectAll("table").remove()
+                    .selectAll("#table").remove()
                 d3new.select("#tableContainer")
-                    .selectAll("time").remove()
+                    .selectAll("#time").remove()
+                d3new.selectAll("table").remove()
                 let time=d3new.select("#tableContainer").append("div").attr("id", "time")
                 
-                let structures = d3new.select("#tableContainer").append("table")
-                 
+                let structures = d3new.select("#divdatatable").append("table").attr("id", "datatable")
                     
                 let ttime = time.append("table").attr("id", "ttime")
                 let trow=ttime.append("tr")
@@ -817,7 +828,7 @@ function WriteTable(strToPlot){
                 let tr = tbody.selectAll("tr")
                       .data(strToPlot)
                       .enter()
-                      .append("tr").attr("class", "tableData")                      
+                    //   .append("tr").attr("class", "tableData")                      
                       .selectAll("td")
                       .data(d => {
                           return [{column:"id", value:d.id},//{column:"time", value: d.time},
@@ -925,7 +936,8 @@ function PLOT(realtime) {
                             .enter()
                             .append("svg")
                             .attr("class", "plot")
-                            .style("opacity", 100).style("z-index", 1)
+                            // .style("background-color", "white")
+                            .style("opacity", 50).style("z-index", 1)
                             .attr("id",   d => { return "svg"+d.data.name})
                             // .style("background-color", "white") .style("opacity", 50)
                             .on("mouseover", (e,d)=> {  //show occ when mouse over
@@ -937,7 +949,7 @@ function PLOT(realtime) {
                                 infodiv.html(d.data.value)
                                 .style('left',  ()=>{ return `${d.x0+25}px`; })
                                 .style('top',  () => { return `${d.y0}px`; })
-                                return infodiv.style("opacity", 100).style("z-index", 3);})    
+                                return infodiv.style("opacity", 100).style("z-index", 1);})    
                             .on('mouseout', (e,d)=> {  
                                     d3.select(".infodiv").remove() //delete on mouseout   
                                 }) 
@@ -953,7 +965,8 @@ function PLOT(realtime) {
                                     .attr("class", "help").style("width", `${svgWidth}px`)
                                     .style("height", `${svgHeight}px`)
                                     .style('position', 'relative')
-                                    .style("z-index", 2).style("background-color", "azure").text("Selected structure, occupancy "+d.data.value); 
+                                    .style("z-index", 2)
+                                    .style("background-color", "azure").text("Selected structure, occupancy "+d.data.value); 
                                     let rectname="svg"+d.data.name
                                  
                                     containers[rectname].addRNA(d.data.str,{"sequence": inputSeq} )
@@ -963,7 +976,8 @@ function PLOT(realtime) {
                                         .style("height", `${svgHeight}px`)
                                         .style('left',  d =>{ return `${0}px`; })
                                         .style('top',  d => { return `${0}px`; })
-                                        .style("opacity", 100).style("z-index", 3)
+                                        .style("opacity", 100)
+                                        .style("z-index", 3)
                                         
                                         
                                 }
@@ -1277,8 +1291,7 @@ function ShowData(data) {
                     
                     animationDelay=item.value
                    //console.log( animationDelay)
-                })
-                   
+                })                   
             })
             
             let ToogleAnimation= setInterval(() => {
@@ -1294,14 +1307,9 @@ function ShowData(data) {
                 }
                 const element = nestedData[elementIndex];
                 //console.log(nestedData)
-                
                 prevtime = +element[0]
-             
                 PLOT(prevtime)
-                showLine(combinedScale(prevtime))
-       
-
-                
+                showLine(combinedScale(prevtime))  
                 elementIndex += 1;
                 
                 return prevtime
@@ -1322,18 +1330,10 @@ function ShowData(data) {
             }
             catch{()=>{
                 // console.log("err", err)
-                 }
-                
+                 }                
             }
             return
-        }
-        //  ret=true
-        //  if (prevtime!=null){
-        //     PLOT(prevtime)
-        //     showLine(combinedScale(prevtime)) 
-        // }
-      
-        
+        }    
     }
     
   
@@ -1344,21 +1344,27 @@ function ShowData(data) {
        
         if (delayResize) clearTimeout(delayResize);
         delayResize = setTimeout(onResize, 300)
-
-        // ShowData(data)
-        // if (realtime!=null){
-        //         PLOT(realtime)
-        //         showLine(combinedScale(realtime)) 
-        //     }
-        // console.log("1",ret)
      
     };
-   // console.log(data)
+    
     return
-//     console.log("after",ret)
-//    if (ret) {ret=false
-//     return prevtime}
+
     
 } 
+
+function hideseq() { 
+    let x = document.getElementById("seqfield");
+    x.style.display = x.style.display === "none" ? "block" : "none"; 
+}
+
+function hidetab() { 
+    let x = document.getElementById("divdatatable");
+    if (x.style.display=="") 
+        x.style.display=="block"
+
+    x.style.display =   x.style.display=="block" ? "none" : "block";
+    
+   
+}
 
 start();
