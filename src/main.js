@@ -939,7 +939,7 @@ function PLOT(realtime) {
                             // .style("background-color", "white")
                             .style("opacity", 50).style("z-index", 1)
                             .attr("id",   d => { return "svg"+d.data.name})
-                            // .style("background-color", "white") .style("opacity", 50)
+                            .style("background-color", "white") .style("opacity", 50)
                             .on("mouseover", (e,d)=> {  //show occ when mouse over
                                 d3.select(".infodiv").remove()
                                 let infodiv = d3.select("#treemapdiv").append("div")
@@ -978,6 +978,8 @@ function PLOT(realtime) {
                                         .style('top',  d => { return `${0}px`; })
                                         .style("opacity", 100)
                                         .style("z-index", 3)
+                                        .style("background-color", "")
+                                        
                                         
                                         
                                 }
@@ -988,7 +990,7 @@ function PLOT(realtime) {
                                     return c.style('left',  d =>{ return `${d.x0}px`; })
                                     .style('top',  d => { return `${d.y0}px`; })
                                     .style("z-index", 1)
-                                    // .style("background-color", "white")                                
+                                    .style("background-color", "white")                                
                                     .style('width',  d => { return `${(d.x1 - d.x0)}px`; })
                                     .style('height',  d => { return `${(d.y1 - d.y0)}px`; })}
                                     
