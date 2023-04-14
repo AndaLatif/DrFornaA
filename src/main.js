@@ -967,9 +967,9 @@ function PLOT(realtime) {
                                     .style('position', 'relative')
                                     .style("z-index", 2)
                                     .style("background-color", "azure").text("Selected structure, occupancy "+d.data.value); 
-                                    let rectname="svg"+d.data.name
-                                 
-                                    containers[rectname].addRNA(d.data.str,{"sequence": inputSeq} )
+                                    // // VARIANT2: PUT SEQ ON ZOOM
+                                    // let rectname="svg"+d.data.name
+                                    // containers[rectname].addRNA(d.data.str,{"sequence": inputSeq} )
                                  
                                     // console.log(d.data)                              
                                     return c.style("width", `${svgWidth}px`)
@@ -984,9 +984,11 @@ function PLOT(realtime) {
                                         
                                 }
                                 else{zoom=false
-                                    let rectname="svg"+d.data.name
+                                    
                                     d3.select(".help").remove()
-                                    containers[rectname].addRNA(d.data.str)
+                                    // VARIANT2:
+                                    // let rectname="svg"+d.data.name
+                                    // containers[rectname].addRNA(d.data.str)
                                     return c.style('left',  d =>{ return `${d.x0}px`; })
                                     .style('top',  d => { return `${d.y0}px`; })
                                     .style("z-index", 1)
@@ -1015,7 +1017,11 @@ function PLOT(realtime) {
                                 if ( d.data.str != '') {
                                     containers[rectname] = new FornaContainer('#' + rectname,{zoomable:false, editable:false, animation:false, displayNodeLabel: true,// labelInterval:0,
                                         transitionDuration:0});
-                                        containers[rectname].addRNA(d.data.str )
+                                        // VARIANT2: 
+                                        // containers[rectname].addRNA(d.data.str)
+                                        //// VARIANT1
+                                        containers[rectname].addRNA(d.data.str, {"sequence": inputSeq})
+                                 
                                  
                                     containers[rectname].transitionRNA(d.data.str);
                                 
