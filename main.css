@@ -1,9 +1,11 @@
 body {
     background: white;
+    font-size: 1rem;
+    min-width: 600px;
   }
 #helptot{
   background: white;
-  font-size: 0.75rem;
+  font-size: 1rem;
   padding: 0px;
   margin-block-start: 0.2em;
   margin-block-end: 0.2em;
@@ -19,14 +21,21 @@ body {
   flex-wrap: wrap;
 }
 .left_container{    
-width: 63%;
+width: 50%;
 padding-left: 0.5rem;
  padding-right: .5rem;
+}
+.example_container{
+  width: 34%;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  font-family: 'Courier New', Courier, monospace;
 }
 .right_container{    
   width: 34%;
   padding-left: .5rem;
   padding-right: .5rem;
+  /* font-family: 'Courier New', Courier, monospace; */
 }
 p {
   display: block;
@@ -37,6 +46,7 @@ p {
 }
 #title{
     text-align: center;
+    min-width: 600px;
     background-color: rgb(0, 69, 148);
     color:white;
     padding: 7px;
@@ -58,7 +68,7 @@ p {
 }
 #result{
     max-width: 2000px;
-    min-width: 450px;
+    min-width: 600px;
     margin: auto;
     width:80%; 
     /* margin-left:90px;
@@ -85,24 +95,10 @@ p {
   text-align: center;
 
 }
-.form {/*for file input and deleted radio butons */
-    display: table;
-    padding-top: 5px;
-    clear: both;
-    padding-left: 5px;
-    font-family:'Courier New', Courier, monospace;
-    margin: 5px;
-    height: 100%;
-    width: 100%;
-    /* overflow: scroll; */
-    text-align: left;
-    display:flex;
-  }
-.forminput { /*deleted radio butons */
-    float: left;
-    margin-left: 5px;
-    margin: 5px;  
-  }
+.form{
+  display: flex;
+}
+
 .seqform{
     max-width:1600px;
     height: 100%;
@@ -114,7 +110,7 @@ p {
     font-weight: 600;
     line-height: 1.25rem;
     display: flex; 
-    text-align: right;
+    text-align: center;
     
   }
 .seqtext{
@@ -123,8 +119,8 @@ p {
 #time{
   text-align: center;
   margin: auto;
-  width: 50%;
-  font-size: .75rem;
+  width: 70%;
+  font-size: 1rem;
 }
 #ttime{
   margin: auto;
@@ -134,7 +130,7 @@ p {
 #sequence{
     text-align: left;
     height: 100%;
-    width: 80%;  
+    width: 100%;  
     border-radius: .5rem;
     box-sizing: border-box; 
     
@@ -164,7 +160,6 @@ p {
 }
 .fileinp::file-selector-button,  .bform
 
-/* -webkit-file-upload-button, .bform */
  {
   background-color: #d8ddf3;
   border: 0;
@@ -182,6 +177,12 @@ p {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   cursor: pointer;
   
+}
+#divdatatable{
+  display: none;
+  overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
+  padding:0rem
 }
 
 .seqfileinpc::file-selector-button{
@@ -203,15 +204,69 @@ p {
   cursor: pointer;
   
 }
+#toggleTable{
+  align-self: right;
+  background-color: #d8ddf3;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #050e22;
+  /* font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .3rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;}
+
+#toggleSequence {
+  align-self: right;
+  background-color: #d8ddf3;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #050e22;
+  /* font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .3rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
 .sb{
   width:20%;
   align-content: center;
+}
+.alignright {
+    float: right;
+    /*width: 33.33333%;*/
+    text-align: right;
+}
+.alignleft {
+    float: left;
+    width:33%;
+    /* min-width: 400px; */
+    text-align: left;
 }
 .fileinput{
     font-family:Arial, Helvetica, sans-serif;
     font-size: .875rem;
     font-weight: 600;
-    width:50%;   
+    width:49%;   
+}
+.seqToggleDiv{
+    text-align: right;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: .875rem;
+    font-weight: 600;
+    width:49%;   
 }
 .seqfileinp{
   font-family:Arial, Helvetica, sans-serif;
@@ -247,7 +302,7 @@ p {
   
   #controlContainer {
     padding: 5px;
-    text-align: right;
+    text-align: center;
     font-family:Arial, Helvetica, sans-serif;
     
 }
@@ -284,9 +339,9 @@ height:120px
 }
 
 .fornac-nodeLabel {
-   /* font-weight:0.5rem ; */
+  /* font-weight:0.5rem ; */
   fill:black;
-  stroke-width: 0.005rem;
+  stroke-width: 0.03rem;
   font-size: 0.5em;
   /* font-weight: lighter; */
   font-family:'Times New Roman', Times, serif;
@@ -315,7 +370,7 @@ height:120px
 }
 #footnote{
   display:inline-flex;
-  font-size: 0.6em;
+  font-size: 1em;
   width: 100%;
 }
 .infodiv{
